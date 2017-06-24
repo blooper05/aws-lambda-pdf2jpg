@@ -1,5 +1,5 @@
 import boto3
-from wand.image import Image
+import subprocess
 
 def lambda_handler(event, context):
     bucket   = event['Records'][0]['s3']['bucket']['name']
@@ -8,14 +8,18 @@ def lambda_handler(event, context):
     client   = boto3.client('s3')
     client.download_file(bucket, filename, tmp_path)
 
-    with Image(filename = tmp_path, resolution = 600) as img:
-        filename = filename.replace('.pdf', '.jpg')
-        tmp_path = '/tmp/' + filename
+    out_file = filename.replace('.pdf', '.jpg')
+    out_path = tmp_path.replace('.pdf', '.jpg')
 
-        img.format        = 'jpeg'
-        img.alpha_channel = False
+    cmd  = 'convert '
+    cmd += '-density 600 '
+    cmd += '-colorspace RGB '
+    cmd += '-alpha Remove '
+    cmd += '-resize 1920x '
+    cmd += '-append '
+    cmd += tmp_path
+    cmd += ' '
+    cmd += out_path
+    subprocess.call(cmd.strip().split(' '))
 
-        img.transform(resize = '1920x')
-        img.save(filename = tmp_path)
-
-    client.upload_file(tmp_path, bucket, filename)
+    client.upload_file(out_path, bucket, out_file)
