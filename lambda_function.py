@@ -12,10 +12,11 @@ def lambda_handler(event, context):
     out_path = tmp_path.replace('.pdf', '.jpg')
 
     cmd  = 'convert '
-    cmd += '-density 600 '
+    cmd += '-density 300 '
     cmd += '-colorspace RGB '
     cmd += '-alpha Remove '
-    cmd += '-resize 1920x '
+    cmd += '-scale 1920x '
+    cmd += '-quality 80 '
     cmd += '-append '
     cmd += tmp_path
     cmd += ' '
