@@ -21,6 +21,6 @@ def lambda_handler(event, context):
     cmd += tmp_path
     cmd += ' '
     cmd += out_path
-    subprocess.call(cmd.strip().split(' '))
+    subprocess.check_call(cmd.strip().split(' '))
 
     client.upload_file(out_path, bucket, out_file)
