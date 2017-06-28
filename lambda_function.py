@@ -4,7 +4,7 @@ import subprocess
 def lambda_handler(event, context):
     bucket   = event['Records'][0]['s3']['bucket']['name']
     filename = event['Records'][0]['s3']['object']['key']
-    tmp_path = '/tmp/' + filename
+    tmp_path = '/tmp/' + filename.split('/')[-1]
     client   = boto3.client('s3')
     client.download_file(bucket, filename, tmp_path)
 
