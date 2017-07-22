@@ -1,16 +1,18 @@
 sudo: required
-
 language: python
-
 python:
-  - 3.6
-
+- 3.6
 services:
-  - docker
-
+- docker
 script:
-  - true # TODO: write some tests
-
+- true
 before_deploy:
-  - docker build -t aws-lambda-pdf2jpg .
-  - docker run --rm -v "$PWD":/var/task aws-lambda-pdf2jpg
+- docker build -t aws-lambda-pdf2jpg .
+- docker run --rm -v "$PWD":/var/task aws-lambda-pdf2jpg
+deploy:
+  provider: releases
+  api_key:
+    secure: mqCXoq9Oz9cYTWFa8IfTnTQjlUlKzrgO78dpNzGr9O8o1f78VP6Nl6Y7sP4XxDF/iiMbUJ79nHOLRH3JBZ08VO61q88KNIoNim01tupHv+iFp8H7D3GYrOtjrxk6LE/fKG13Klp1ON3oEdyszhK99eUOR2dQFV6hM5Nlst9cvm/ql/mEf6vtXwgFW+g3GcSom6sV0on76IGIw0vXXkjI3RYt6Ro+2ffTnVEwJoFi9QRUTG/msAwJwL0O1DsRGjFlJyJ8CP7PbFTgLLd3WArga5VLI29l4iMrmMD3pxbLz/fDMyaISxGJ3Qqbe8sXMB/A+MszPbnRWLXe8+yxXblTgu6D/eBpwND2COUVsxrdWU2YG1JhgP+cT1ZrCLKrVd4WCDswYCM8LJwoV683EkCpe4GKhlvNmNSF9adn2hoeERKJbQY+dMETrnj7F5grHBWdvOBXA9LYEP9Ty1xoPqJH0mjKDefG3WJYIZsRkQ+eLvOrFeao9VJ7pC3An/FTgjn4BJdLEygPktjdSNQkmMXRwSqBdt3FzIqJNXf3ls11sYukSIiUMYwBrbdl1FOy0m/Zoo/ZHZ/rE+TXhBpvL3oENHlLy5drqbTHpgvi7CuGVaqlFXwCywSX/UftRfeRjqiROiL4/WNEJoJ1HF8dQ6zOUcLUtkPuIkgwCxOf9YpHLws=
+  file: deploy_package.zip
+  on:
+    repo: blooper05/aws-lambda-pdf2jpg
