@@ -5,7 +5,7 @@ python:
 services:
 - docker
 script:
-- true
+- true # TODO: write some tests
 before_deploy:
 - docker build -t aws-lambda-pdf2jpg .
 - docker run --rm -v "$PWD":/var/task aws-lambda-pdf2jpg
