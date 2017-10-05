@@ -286,3 +286,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/python,sublimetext,vim,visualstudiocode,jetbrains,linux,osx,windows
+
+deploy_package.zip
